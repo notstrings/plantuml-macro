@@ -1,0 +1,33 @@
+' マクロ:タスク定義
+!procedure $DefTask($Task,$Term,$Start="",$End="")
+  $Task requires $Term
+  !if (%strpos($Start,"[") >= 0) && (%strpos($Start,"]") >= 0)
+    $Task starts at $Start's end
+  !elseif ($Start != "")
+    $Task starts $Start
+  !endif
+  !if (%strpos($End,"[") >= 0) && (%strpos($End,"]") >= 0)
+    $Task ends at $End's end
+  !elseif ($End != "")
+    $Task ends $End
+  !endif
+!end procedure
+' マクロ:マイルストーン定義
+!procedure $DefMile($Mile,$Events)
+  !if (%strpos($Events,"[") >= 0) && (%strpos($Events,"]") >= 0)
+    !foreach $elm in %splitstr($Events,",")
+      $Mile happens at $elm's end
+    !endfor
+  !elseif (Events!="")
+    $Mile happens $Events
+  !endif
+  !$PrevNode = $Mile
+!end procedure
+' マクロ:表示行指定
+!procedure $SameLine($Task,$Row)
+  $Task displays on same row as $Row
+!end procedure
+' マクロ:進捗率
+!procedure $SetProg($Task,$Progress)
+  $Task is $Progress% complete
+!end procedure
