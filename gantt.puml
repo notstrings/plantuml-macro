@@ -1,32 +1,47 @@
 ' マクロ:タスク定義
 !procedure $DefTask($Task,$Term,$Start="",$End="")
-  $Task requires $Term
-  !if (%strpos($Start,"[") >= 0) && (%strpos($Start,"]") >= 0)
-    $Task starts at $Start's end
-  !elseif ($Start != "")
-    $Task starts $Start
-  !endif
-  !if (%strpos($End,"[") >= 0) && (%strpos($End,"]") >= 0)
-    $Task ends at $End's end
-  !elseif ($End != "")
-    $Task ends $End
-  !endif
+    !if ($Task != "" && $Term != "")
+        !$List = %splitstr_regex($Term, "(?=[WDwd])")
+        !if %size($List) >= 2
+            !if ($List[1] == "D") || ($List[1] == "d")
+                [$Task] requires $List[0] days
+            !endif
+            !if ($List[1] == "W") || ($List[1] == "w")
+                [$Task] requires $List[0] weeks
+            !endif
+        !endif
+    !endif
+    !if ($Start != "")
+        [$Task] starts $Start
+    !endif
+    !if ($End != "")
+        [$Task] ends $End
+    !endif
 !end procedure
+
 ' マクロ:マイルストーン定義
 !procedure $DefMile($Mile,$Events)
-  !if (%strpos($Events,"[") >= 0) && (%strpos($Events,"]") >= 0)
-    !foreach $elm in %splitstr($Events,",")
-      $Mile happens at $elm's end
-    !endfor
-  !elseif (Events!="")
-    $Mile happens $Events
-  !endif
-  !$PrevNode = $Mile
+    !if (%strpos($Events,",") >= 0)
+        !foreach $elm in %splitstr($Events,",")
+            [$Mile] happens at [$elm]'s end
+        !endfor
+    !else
+        $Mile happens $Events
+    !endif
 !end procedure
+
 ' マクロ:表示行指定
-!procedure $SameLine($Task,$Row)
-  $Task displays on same row as $Row
+!procedure $SameRow($Tasks)
+    !$List = %splitstr($Tasks,",")
+    !$idx = 1
+    !while $idx < %size($List) 
+        !$pre = $List[0]
+        !$saf = $List[$idx]
+        [$pre] displays on same row as [$saf]
+        !$idx = $idx + 1
+    !endwhile
 !end procedure
+
 ' マクロ:進捗率
 !procedure $SetProg($Task,$Progress)
   $Task is $Progress% complete
