@@ -17,7 +17,7 @@ sunday   are closed
 2025/01/01 to 2025/01/05 is closed
 hide footbox
 
-!includeurl https://raw.githubusercontent.com/notstrings/plantuml-macro/main/gantt.puml
+!include https://raw.githubusercontent.com/notstrings/plantuml-macro/main/gantt.puml
 
 ' ガント本体
 title Test
