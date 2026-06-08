@@ -6,35 +6,30 @@
 
 あまりの面倒くささにマクロを用意してみた
 
-インクルード
+```plantuml
+@startgantt
+' ガント設定
+language ja
+projectscale daily with calendar date zoom 1
+project starts 2025/01/01
+saturday are closed
+sunday   are closed
+2025/01/01 to 2025/01/05 is closed
+hide footbox
 
-```puml
 !includeurl https://raw.githubusercontent.com/notstrings/plantuml-macro/main/gantt.puml
-```
 
-タスク定義
-後者は前提タスク
+' ガント本体
+title Test
 
-```puml
-$DefTask("[タスクA]","10 days")
-$DefTask("[タスクB]","10 days","[タスクA]")
-```
-
-マイルストーン定義
-何れかのタスクの最後に張り付く
-
-```puml
-DefMile("[マイルストーン]","[タスクA],[タスクB]")
-```
-
-タスクorマイルストーンを同じ行にレイアウト
-
-```puml
-$SameLine("[要件定義暫定]","[要件定義合意]")
-```
-
-進捗値の設定
-
-```puml
-$SameLine("[タスクA]",75)
+$DefTask("Task1","1w")
+$DefTask("Task2","2w")
+$DefTask("Task3","1w")
+$DefTask("Task4","1w")
+$DefTask("Task5","1w")
+[Task1]->[Task2]
+[Task1]->[Task3]
+$DefMile("aaa", "Task1,Task2")
+$DefMile("bbb", "Task1,Task3")
+$SameRow("aaa,bbb")
 ```

@@ -1,3 +1,4 @@
+
 ' マクロ:タスク定義
 !procedure $DefTask($Task,$Term,$Start="",$End="")
     !if ($Task != "" && $Term != "")
@@ -34,7 +35,7 @@
 !procedure $SameRow($Tasks)
     !$List = %splitstr($Tasks,",")
     !$idx = 1
-    !while $idx < %size($List) 
+    !while $idx < %size($List)
         !$pre = $List[0]
         !$saf = $List[$idx]
         [$pre] displays on same row as [$saf]
